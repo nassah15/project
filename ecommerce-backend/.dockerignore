@@ -1,0 +1,16 @@
+# Python virtual environment
+env/
+.env/
+# Python bytecode
+__pycache__/
+*.pyc
+# env file
+.env
+.env.*
+# Testing db models
+test.py
+# git and gitignore
+.git
+.gitignore
+# node modules (if you ever copy frontend)
+node_modules/

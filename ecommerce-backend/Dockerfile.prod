@@ -1,0 +1,39 @@
+# ---------- Stage 1: build dependencies ----------
+FROM python:3.11-slim AS build
+
+WORKDIR /app
+
+# Install build tools if needed (for some pip packages)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    libpq5 \
+    gcc \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# ---------- Stage 2: minimal runtime image ----------
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Copy installed packages from build stage
+COPY --from=build /usr/local/lib/python3.11 /usr/local/lib/python3.11
+COPY --from=build /usr/local/bin /usr/local/bin
+
+
+# Copy app code 
+COPY . .
+
+# Environment
+ENV FLASK_ENV=production
+ENV PYTHONUNBUFFERED=1
+
+# Expose backend port INSIDE container
+EXPOSE 5000
+
+# start gunicorn and bind to all network interfaces (app:app = module:Flask app object)
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
+

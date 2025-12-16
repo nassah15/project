@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "ecommerce.fullname" . }}-backend
+spec:
+  type: {{ .Values.backend.service.type }}
+  selector:
+    app.kubernetes.io/component: backend
+  ports:
+  - port: 5000
+    targetPort: 5000
+    {{- if .Values.backend.service.nodePort }}
+    nodePort: {{ .Values.backend.service.nodePort }}
+    {{- end }}
+

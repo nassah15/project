@@ -1,0 +1,37 @@
+postgres:
+  image:
+    repository: postgres
+    tag: "15"
+  replicas: 1
+  storage: 5Gi
+  secrets: {}
+
+
+
+backend:
+  replicas: 1
+
+  image:
+    repository: ""
+    tag: latest
+
+  env:
+    FLASK_ENV: production
+    POSTGRES_PORT: "5432"
+  secrets: {}
+  service:
+    type: ClusterIP
+
+
+frontend:
+  replicas: 1
+  image:
+    repository: ""
+    tag: latest
+  service:
+    type: ClusterIP
+
+
+ingress:
+  enabled: false
+  host: ""

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "ecommerce.fullname" . }}-frontend
+spec:
+  type: {{ .Values.frontend.service.type }}
+  selector:
+    app.kubernetes.io/component: frontend
+  ports:
+  - port: 80
+    targetPort: 80
+    {{- if .Values.frontend.service.nodePort }}
+    nodePort: {{ .Values.frontend.service.nodePort }}
+    {{- end }}
+
