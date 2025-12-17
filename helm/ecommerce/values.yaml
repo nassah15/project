@@ -9,7 +9,7 @@ postgres:
 
 
 backend:
-  replicas: 1
+  replicas: 3
 
   image:
     repository: ""
@@ -24,7 +24,7 @@ backend:
 
 
 frontend:
-  replicas: 1
+  replicas: 3
   image:
     repository: ""
     tag: latest
