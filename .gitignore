@@ -1,3 +1,8 @@
 # env file
 .env
 .env.*
+# Terraform local files
+**/.terraform/*
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
