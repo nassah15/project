@@ -7,21 +7,21 @@ A production-ready ecommerce ecosystem featuring a React frontend, Flask REST AP
 ## Architectural Evolution
 
 
-Local Development: Orchestrated with Docker Compose using hot-reloading for rapid iteration .
-Container Optimization: Implemented multi-stage builds in Docker to reduce image sizes and minimize attack surfaces .
-Cloud Orchestration: Transitioned from raw Kubernetes manifests to modular Helm charts for environment-specific configuration .
-Infrastructure as Code: Provisioned a high-availability Three-Tier VPC and EKS Cluster using Terraform .
-CI/CD: Automated the pipeline using GitHub Actions with OIDC, enabling secure, keyless deployments to Amazon ECR and EKS .
+* Local Development: Orchestrated with Docker Compose using hot-reloading for rapid iteration .
+* Container Optimization: Implemented multi-stage builds in Docker to reduce image sizes and minimize attack surfaces .
+* Cloud Orchestration: Transitioned from raw Kubernetes manifests to modular Helm charts for environment-specific configuration .
+* Infrastructure as Code: Provisioned a high-availability Three-Tier VPC and EKS Cluster using Terraform .
+* CI/CD: Automated the pipeline using GitHub Actions with OIDC, enabling secure, keyless deployments to Amazon ECR and EKS .
 
 
 ## Key Features
 
 
-Infrastructure: AWS EKS with ARM-based (t4g.medium) managed node groups for cost-efficiency .
-Networking: Automated AWS ALB (Application Load Balancer) provisioning via Ingress Controller for path-based routing (/ and /api) .
-Security: OIDC-based identity federation for CI/CD and IRSA (IAM Roles for Service Accounts) to enforce least privilege .
-Storage: Persistent ecommerce data using EBS CSI Driver and gp3 storage classes .
-Observability: Integrated Prometheus and Grafana stack for real-time cluster monitoring .
+* Infrastructure: AWS EKS with ARM-based `(t4g.medium)` managed node groups for cost-efficiency .
+* Networking: Automated AWS `ALB` (Application Load Balancer) provisioning via Ingress Controller for path-based routing (/ and /api) .
+* Security: OIDC-based identity federation for CI/CD and IRSA (IAM Roles for Service Accounts) to enforce least privilege .
+* Storage: Persistent ecommerce data using EBS CSI Driver and `gp3` storage classes .
+* Observability: Integrated Prometheus and Grafana stack for real-time cluster monitoring .
 
 ## Project Structure
 
@@ -48,9 +48,10 @@ Observability: Integrated Prometheus and Grafana stack for real-time cluster mon
 ```bash
 # Start the full stack in development mode
 docker-compose up --build
+```
 
 
-The frontend will be available at http://localhost:5173 and the backend at http://localhost:5001
+The frontend will be available at `http://localhost:5173` and the backend at `http://localhost:5001`
 
 
 ---
@@ -59,7 +60,7 @@ The frontend will be available at http://localhost:5173 and the backend at http:
 ## Cloud Deployment
 
 
-###1. Infrastructure Provisioning
+### 1. Infrastructure Provisioning
 
 
 To provision the AWS resources using Terraform:
@@ -69,6 +70,7 @@ To provision the AWS resources using Terraform:
 cd infra/terraform
 terraform init
 terraform apply
+```
 
 
 ### 2. Manual Helm Installation (Optional)
@@ -79,12 +81,12 @@ If you prefer to deploy manually rather than via CI/CD, use the following comman
 
 ```bash
 helm upgrade --install ecommerce ./helm/ecommerce -f helm/ecommerce/values-eks.yaml
-
+```
 
 ## Monitoring
 
 
-The monitoring stack is deployed via Helm in the 'monitoring' namespace.
+The monitoring stack is deployed via Helm in the `monitoring` namespace.
 
 
 * Prometheus: Handles metric collection with a 1-day retention period to optimize costs .
@@ -97,4 +99,4 @@ The monitoring stack is deployed via Helm in the 'monitoring' namespace.
 ## Security Note
 
 
-This project utilizes GitHub OIDC for AWS authentication, removing the need for static AWS_ACCESS_KEY_ID in repository secrets . All database credentials are managed via Kubernetes Secrets .
+This project utilizes GitHub `OIDC` for AWS authentication, removing the need for static `AWS_ACCESS_KEY_ID` in repository secrets . All database credentials are managed via Kubernetes Secrets .
